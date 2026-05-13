@@ -1,61 +1,78 @@
-HA_Medtrum
-Home Assistant custom integration for Medtrum Nanopump systems.
+# HA_Medtrum
 
-Overview
+Home Assistant custom integration for Medtrum Nanopump CGM systems.
+
+## Overview
+
 This integration allows you to monitor your Medtrum Nanopump directly in Home Assistant by reading real-time glucose data, insulin remaining, IOB (Insulin on Board), and other pump metrics.
-Tested with: Medtrum Nanopump 200
 
-Features
-📊 Real-time Glucose Monitoring - Current blood sugar in mmol/L
-💉 Insulin Management - IOB, Remaining Insulin Units, Last Bolus
-🔋 Battery Status - CGM Sensor Battery Percentage
-📡 Connection Status - Pump connectivity indicator
-⏰ Last Update Timestamp - When data was last fetched
-📈 Glucose Trend - Rate of change (mmol/L/min)
+**Tested with:** Medtrum Nanopump 200
 
-Sensors Provided
-Sensor	Unit	Description
-`sensor.medtrum_glucose`	mmol/L	Current blood glucose
-`sensor.medtrum_glucose_rate`	mmol/L/min	Glucose trend
-`sensor.medtrum_iob`	U	Insulin on Board
-`sensor.medtrum_insulin_remaining`	U	Insulin in reservoir
-`sensor.medtrum_last_bolus`	U	Last bolus delivered
-`sensor.medtrum_sensor_battery`	%	CGM sensor battery
-`sensor.medtrum_connection_status`	-	Pump connection state
-`sensor.medtrum_last_update`	-	Timestamp of last data fetch
+## Features
 
-Installation
-Via HACS (Recommended)
-Open HACS in Home Assistant
-Go to Integrations → Click ⋮ → Custom repositories
-Add repository: `https://github.com/pdv63/HA_Medtrum`
-Category: `Integration`
-Click Install
-Restart Home Assistant
-Manual Installation
-Download this repository
-Copy the `medtrum` folder to `~/.homeassistant/custom_components/`
-Restart Home Assistant
-Setup
-Go to Settings → Devices & Services
-Click Create Integration
-Search for Medtrum
-Enter your Medtrum account email and password
-A 2FA code will be sent to your email - enter it when prompted
-✅ Integration is now configured!
+- 📊 **Real-time Glucose Monitoring** - Current blood sugar in mmol/L
+- 💉 **Insulin Management** - IOB, Remaining Insulin Units, Last Bolus
+- 🔋 **Battery Status** - CGM Sensor Battery Percentage
+- 📡 **Connection Status** - Pump connectivity indicator
+- ⏰ **Last Update Timestamp** - When data was last fetched
+- 📈 **Glucose Trend** - Rate of change (mmol/L/min)
 
-Configuration
-The integration uses config flow - all settings are configured via the UI.
-Scan Interval
-Default: 5 minutes (adjust in integration settings)
-Reconfigure
+## Sensors Provided
+
+| Sensor | Unit | Description |
+|--------|------|-------------|
+| `sensor.medtrum_glucose` | mmol/L | Current blood glucose |
+| `sensor.medtrum_glucose_rate` | mmol/L/min | Glucose trend |
+| `sensor.medtrum_iob` | U | Insulin on Board |
+| `sensor.medtrum_insulin_remaining` | U | Insulin in reservoir |
+| `sensor.medtrum_last_bolus` | U | Last bolus delivered |
+| `sensor.medtrum_sensor_battery` | % | CGM sensor battery |
+| `sensor.medtrum_connection_status` | - | Pump connection state |
+| `sensor.medtrum_last_update` | - | Timestamp of last data fetch |
+
+## Installation
+
+### Via HACS (Recommended)
+
+1. Open **HACS** in Home Assistant
+2. Go to **Integrations** → Click **⋮** → **Custom repositories**
+3. Add repository: `https://github.com/yourusername/HA_Medtrum`
+4. Category: `Integration`
+5. Click **Install**
+6. **Restart Home Assistant**
+
+### Manual Installation
+
+1. Download this repository
+2. Copy the `medtrum` folder to `~/.homeassistant/custom_components/`
+3. **Restart Home Assistant**
+
+## Setup
+
+1. Go to **Settings → Devices & Services**
+2. Click **Create Integration**
+3. Search for **Medtrum**
+4. Enter your Medtrum account **email** and **password**
+5. A 2FA code will be sent to your email - enter it when prompted
+6. ✅ Integration is now configured!
+
+## Configuration
+
+The integration uses **config flow** - all settings are configured via the UI.
+
+### Scan Interval
+Default: **5 minutes** (adjust in integration settings)
+
+### Reconfigure
 To update credentials or rescan:
-Go to Devices & Services → Medtrum
-Click ⋮ → Reconfigure
+- Go to **Devices & Services → Medtrum**
+- Click **⋮** → **Reconfigure**
 
-Usage Examples
-Automations
-Alert when glucose is low:
+## Usage Examples
+
+### Automations
+
+**Alert when glucose is low:**
 ```yaml
 automation:
   - alias: "Low Glucose Alert"
@@ -68,7 +85,8 @@ automation:
         data:
           message: "⚠️ Low glucose: {{ states('sensor.medtrum_glucose') }} mmol/L"
 ```
-Alert when insulin is low:
+
+**Alert when insulin is low:**
 ```yaml
 automation:
   - alias: "Low Insulin Alert"
@@ -81,7 +99,9 @@ automation:
         data:
           message: "💉 Insulin low: {{ states('sensor.medtrum_insulin_remaining') }} U remaining"
 ```
-Dashboard Card
+
+### Dashboard Card
+
 ```yaml
 type: entities
 entities:
@@ -100,33 +120,46 @@ entities:
 title: Medtrum CGM
 ```
 
-Troubleshooting
-Integration not loading
-Check Settings → System → Logs for errors
-Ensure Home Assistant version is 2023.1 or higher
-No data appearing
-Wait 5 minutes for first data fetch (default scan interval)
-Check credentials are correct
-Try Reconfigure to refresh authentication
-2FA code expired
-If setup fails during 2FA, simply try again
-New code is sent automatically
-Connection refused (403)
-Your session cookies may have expired
-Click Reconfigure to log in again
+## Troubleshooting
 
-Technical Details
-API Base: `https://easyview.medtrum.eu`
-Authentication: Email/Password + 2FA via email
-Data Update: Every 5 minutes (configurable)
-Glucose Unit: mmol/L only (no mg/dL conversion yet)
+### Integration not loading
+- Check **Settings → System → Logs** for errors
+- Ensure Home Assistant version is 2023.1 or higher
 
-Development
-Requirements
-Python 3.8+
-Home Assistant 2023.1+
-aiohttp (included with Home Assistant)
-File Structure
+### No data appearing
+- Wait 5 minutes for first data fetch (default scan interval)
+- Check credentials are correct
+- Try **Reconfigure** to refresh authentication
+
+### 2FA code expired
+- If setup fails during 2FA, simply try again
+- New code is sent automatically
+
+### Connection refused (403)
+- Your session cookies may have expired
+- Click **Reconfigure** to log in again
+
+## Technical Details
+
+- **API Base:** `https://easyview.medtrum.eu`
+- **Authentication:** Email/Password + 2FA via email
+- **Data Update:** Every 5 minutes (configurable)
+- **Glucose Unit:** mmol/L only (no mg/dL conversion yet)
+
+## API Endpoints Used
+
+- `POST /v3/api/v2.0/login` - Initial login
+- `POST /api/v2.0/seccode/send` - Request 2FA code
+- `GET /api/v2.1/monitor/{uid}/status` - Fetch glucose data
+
+## Development
+
+### Requirements
+- Python 3.8+
+- Home Assistant 2023.1+
+- aiohttp (included with Home Assistant)
+
+### File Structure
 ```
 medtrum/
 ├── __init__.py          # Integration setup & coordinator
@@ -134,14 +167,25 @@ medtrum/
 ├── sensor.py            # Sensor definitions
 └── manifest.json        # Integration metadata
 ```
-Contributing
+
+## Contributing
+
 Found a bug or want to improve something? Open an issue or PR!
-License
+
+## License
+
 MIT License - See LICENSE file for details
-Disclaimer
+
+## Disclaimer
+
 This is an unofficial integration. Use at your own risk. Always verify critical glucose readings with your actual pump display.
-Not affiliated with Medtrum or any medical device manufacturer.
-Credits
+
+**Not affiliated with Medtrum or any medical device manufacturer.**
+
+## Credits
+
 Reverse-engineered using Burp Suite by analyzing the official Medtrum app API.
+
 ---
-Questions? Open an issue on GitHub!
+
+**Questions?** Open an issue on GitHub!
