@@ -1,0 +1,10 @@
+{
+  "domain": "medtrum",
+  "name": "Medtrum Nanopump",
+  "codeowners": [ "@pdv63" ],
+  "config_flow": true,
+  "documentation": "https://github.com/pdv63/HA_Medtrum",
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "version": "1.0.0"
+}
